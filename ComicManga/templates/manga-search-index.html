@@ -151,7 +151,7 @@ body {
 <div class="row">
   {% for row in manga_data %}
   <div class="column">
-    <a href = "/manga/{{ row.link.0 }}">
+    <a href = "/manga/{{ row.link }}">
     <img src="{{ row.photo }}" alt="" width = "225" height = "318">
     </a>
   	<p>{{ row.name }}</p>

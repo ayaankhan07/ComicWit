@@ -26,10 +26,10 @@ class Manga():
         return manga
     def search_manga(self):
         manga_data = self.manga_data
-        if len(manga_data) == 2:
-            manga_data = manga_data[1]
-        elif len(manga_data) == 1:
+        if manga_data[0]:
             manga_data = manga_data[0]
+        else:
+            manga_data = manga_data[1]
         manga_data = manga_data.lower()
         if len(manga_data.split()) == 2:
             manga_data = manga_data.split()[0] + "_" + manga_data.split()[1]
@@ -39,7 +39,7 @@ class Manga():
             manga_data = manga_data.split()[0] + "_" + manga_data.split()[1] + "_" + manga_data.split()[2] + "_" + \
                          manga_data.split()[3]
         html_data = urllib.request.urlopen(
-            urllib.request.Request("https://manganelo.com/search/"+ manga_data, headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
+            urllib.request.Request("https://manganelo.com/search/story/"+ manga_data, headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
             "utf8")
         links_show = re.findall('<a class="item-img" rel="nofollow" href="(.*?)"', html_data)
         show_links = []
@@ -83,6 +83,7 @@ class Manga():
             urllib.request.Request("https://manganelo.com/chapter/" + manga_data + "/chapter_" + str(manga_chapter),
                                    headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
             "utf8")
+        import os
         chapter_images = re.findall('<img src="(.*?)"', html_data)[1:-1]
         return chapter_images
 class Comic():
